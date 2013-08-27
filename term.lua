@@ -47,8 +47,14 @@ function term.getCursorPos()
 end
 
 function term.clear()
+  term.initGrid()
+  term.setCursorPos(1,1)
 end
 function term.clearLine()
+  local x,y = term.getSize()
+  for x=1, term.size[2], 1 do
+    term.grid[x][y] = ""
+  end
 end
 function term.setCursorBlink(state)
 end
