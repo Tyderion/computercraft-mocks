@@ -1,8 +1,15 @@
+local color = {
+  ["white"] = 1
+  ["black"] = 2
+}
+
 term = {}
 
 term.grid = {}
 term.cursorPos = {1,1}
 term.size = {19,51}
+term.textColor = color.white
+term.backgroundColor = color.black
 
 function term.initGrid()
   for x = 1, term.size[1], 1 do
@@ -22,9 +29,15 @@ function term.configure(configuration)
 end
 
 function term.setTextColor(color)
+  if (color == color.white or color = color.black) then
+    term.textColor = color
+  end
 end
 
 function term.setBackgroundColor(color)
+    if (color == color.white or color = color.black) then
+    term.backgroundColor = color
+  end
 end
 
 function term.write(text)
