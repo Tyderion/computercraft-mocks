@@ -86,8 +86,9 @@ function term.clear()
   term.setCursorPos(1,1)
 end
 function term.clearLine()
-  local x,y = term.getSize()
-  for x=1, term.size[2], 1 do
+  local width, height = term.getSize()
+  local x,y = term.getCursorPos()
+  for x=1, width, 1 do
     term.grid[x][y] = term.emptyCell
   end
 end
@@ -103,7 +104,18 @@ function term.getSize()
   return unpack(term.size)
 end
 function term.scroll(lines)
-  -- not implemented
+  local width, height = term.getSize()
+  for x = 1+lines, width, 1 do
+    for y = 1, height, 1 do
+      term.grid[x-lines][y] = term.grid[x][y]
+    end
+  end
+  for i=0, lines-1, 1 do
+    local posx, posy = term.getCursorPos()
+    term.setCursorPos(1,height-1)
+    term.clearLine()
+    term.setCursorPos(posx,posy)
+  end
 end
 
 function term.redirect(target)
@@ -119,6 +131,7 @@ function term.toString()
   local str = ""
   local width, height = term.getSize()
   for x=1, width, 1 do
+    str = str .. "L".. x .. ":\t"
     for y=1, height, 1 do
       str = str .. term.grid[x][y].content
     end
@@ -130,14 +143,17 @@ end
 -- term.configure({["size"] = {5,6}})
 term.initGrid()
 term.write("hey")
+term.setCursorPos(1,5)
+term.write("line 5")
+term.setCursorPos(1,8)
+term.write("line 8")
 print(term.toString())
-print("--------------------------")
-local x,y = term.getCursorPos()
-term.setCursorPos(x-1, y)
-term.write(" ")
-term.setCursorPos(x-1, y)
-term.write("haha")
-print(term.toString())
+-- print("--------------------------")
+-- term.scroll(4)
+-- print(term.toString())
+-- print("--------------------------")
+-- term.scroll(2)
+-- print(term.toString())
 -- term.grid[1][1] = "x"
 -- term.grid[1][4] = "x"
 
