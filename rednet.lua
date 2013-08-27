@@ -93,6 +93,10 @@
     return false
   end
 
+  function rednet.configure(answers)
+    rednet.answers = answers
+  end
+
 
 
   print(rednet.open("back"))
