@@ -132,9 +132,7 @@ function term.toString()
   local str = ""
   local width, height = term.getSize()
   for x=1, width, 1 do
-    local num = "0"
-    if (x < 10 )then num = "0"..x else num = x end
-    str = str .. "L".. num .. ":"
+    str = str .. "L".. string.format("%02d",x) .. ":"
     for y=1, height, 1 do
       str = str .. term.grid[x][y].content
     end
