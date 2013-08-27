@@ -10,6 +10,7 @@ term.cursorPos = {1,1}
 term.size = {19,51}
 term.textColor = color.white
 term.backgroundColor = color.black
+term.cursorBlink = true
 
 function term.initGrid()
   for x = 1, term.size[1], 1 do
@@ -70,13 +71,18 @@ function term.clearLine()
   end
 end
 function term.setCursorBlink(state)
+  if (state == true or state == false) then
+    term.cursorBlink = state
+  end
 end
 function term.isColor()
   return false
 end
 function term.getSize()
+  return unpack(term.size)
 end
 function term.scroll(lines)
+  -- not implemented
 end
 
 function term.redirect(target)
